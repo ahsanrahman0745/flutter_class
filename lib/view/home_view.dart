@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../model/todo_model.dart';
@@ -44,6 +45,7 @@ class _HomeViewState extends State<HomeView> {
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       CircleAvatar(
                         backgroundColor: Colors.greenAccent,
@@ -52,14 +54,42 @@ class _HomeViewState extends State<HomeView> {
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(todoModel.title!,style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.bold),),
-                            Text(todoModel.dis!,),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(todoModel.title,style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.bold),),
+                                  Text(todoModel.dis,),
+                                ],
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                IconButton(onPressed: (){
+                                  print("index no $index");
+                                  print("todoModelList length ${todoModelList.length}");
+                                  setState(() {
+                                    todoModelList.add(todoModel);
+                                  });
+                                  print("todoModelList length ${todoModelList.length}");
+                                }, icon: Icon(Icons.copy,color: Colors.grey,)),
+                                IconButton(onPressed: (){
+                                  print("index no $index");
+                                  print("todoModelList length ${todoModelList.length}");
+                                  setState(() {
+                                    todoModelList.removeAt(index);
+                                  });
+                                  print("todoModelList length ${todoModelList.length}");
+                                }, icon: Icon(Icons.delete,color: Colors.red,)),
+                              ],
+                            ),
                           ],
                         ),
                       )
