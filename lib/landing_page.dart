@@ -16,26 +16,64 @@ class _LandingPageState extends State<LandingPage> {
 
 
 
+
   List<TodoModel> list = [
-    const TodoModel(
+    TodoModel(
+      id: 30,
       status: Status.complete,
       title: "kuch bi ho sqta ha",
       dis: "discretion of this tile"
     ),
-    const TodoModel(
+    TodoModel(
+      id: 31,
         title: "kuch bi ho sqta ha 1",
         dis: "discretion of this tile 1"
     ),
-    const TodoModel(
+    TodoModel(
+      id: 32,
         title: "kuch bi ho sqta ha 2",
         dis: "discretion of this tile 2",
         fav: true,
     ),
-    const TodoModel(
+    TodoModel(
+      id: 33,
         title: "kuch bi ho sqta ha 3",
         dis: "discretion of this tile 3"
     ),
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    list = [
+      TodoModel(
+          id: 30,
+          status: Status.complete,
+          title: "kuch bi ho sqta ha",
+          dis: "discretion of this tile"
+      ),
+      TodoModel(
+          id: 31,
+          title: "kuch bi ho sqta ha 1",
+          dis: "discretion of this tile 1"
+      ),
+      TodoModel(
+        id: 32,
+        title: "kuch bi ho sqta ha 2",
+        dis: "discretion of this tile 2",
+        fav: true,
+      ),
+      TodoModel(
+          id: 33,
+          title: "kuch bi ho sqta ha 3",
+          dis: "discretion of this tile 3"
+      ),
+    ];
+    setState(() {
+
+    });
+  }
 
 
   @override
@@ -93,9 +131,26 @@ class _LandingPageState extends State<LandingPage> {
                           borderRadius: BorderRadius.circular(20)),
                       child: Row(
                         children: [
-                          Icon(list[index].status == Status.complete ? Icons.check_circle_outline :Icons.circle_outlined ,size: 30,),
+                          InkWell(
+                              onTap: (){
+                                if(list[index].status == Status.complete){
+                                  setState(() {
+                                    list[index].status=Status.active;
+                                  });
+                                }else {
+                                  setState(() {
+                                    list[index].status=Status.complete;
+                                  });
+                                }
+                              },
+                              child: Icon(list[index].status == Status.complete ? Icons.check_circle_outline :Icons.circle_outlined ,size: 30,)),
                           SizedBox(width: 10,),
-                          Icon(list[index].fav ?  Icons.favorite : Icons.favorite_border,size: 30,color: list[index].fav ? Colors.red : Colors.grey,),
+                          InkWell(
+                              onTap: (){
+                                setState(() {
+                                  list[index].fav = !list[index].fav!;
+                                });
+                              },child: Icon(list[index].fav! ?  Icons.favorite : Icons.favorite_border,size: 30,color: list[index].fav! ? Colors.red : Colors.grey,)),
                           SizedBox(width: 20,),
                           Column(
                             children: [
@@ -108,7 +163,13 @@ class _LandingPageState extends State<LandingPage> {
                             ],
                           ),
                           SizedBox(width: 30,),
-                          Icon(Icons.delete_outline_outlined,size: 40,color: Colors.red,),
+                      InkWell(
+                        onTap: (){
+                          setState(() {
+                            list.removeAt(index);
+                          });
+                        },
+                          child: Icon(Icons.delete_outline_outlined,size: 40,color: Colors.red,)),
                         ],
                       ),
                     ),

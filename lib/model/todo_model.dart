@@ -1,11 +1,11 @@
 class TodoModel {
-  final int? id;
-  final String title, dis;
-  final bool  fav;
-  final Status status;
+  int? id;
+  String title, dis;
+  bool?  fav;
+  Status? status;
 
-  const TodoModel({
-    this.id,
+  TodoModel({
+    required this.id,
     required this.title,
     required this.dis,
     this.status  =  Status.active,
