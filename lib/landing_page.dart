@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_class/show_toast_flutter.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ndialog/ndialog.dart';
 
 import 'model/todo_model.dart';
@@ -203,8 +205,10 @@ class _LandingPageState extends State<LandingPage> {
                                 TextFormField(
                                   validator: (value){
                                     if(value!.isEmpty){
+                                      showToast(message: "Please Enter Task Title");
                                       return "Please Enter Task Title";
                                     }else if(value.length>=50){
+                                      showToast(message: "Title must have less then 50 character");
                                       return "Title must have less then 50 character";
                                     }
                                     return null;
@@ -220,6 +224,7 @@ class _LandingPageState extends State<LandingPage> {
                                 TextFormField(
                                   validator: (value){
                                     if(value!.isEmpty){
+                                      showToast(message: "Please Enter Task Dis");
                                       return "Please Enter Task Dis";
                                     }
                                     return null;
