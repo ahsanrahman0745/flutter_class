@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:ndialog/ndialog.dart';
 
 import 'model/todo_model.dart';
 import 'nazish.dart';
@@ -15,7 +17,10 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
 
 
+  TextEditingController title = TextEditingController();
+  TextEditingController dis = TextEditingController();
 
+  var key =GlobalKey<FormState>();
 
   List<TodoModel> list = [
     TodoModel(
@@ -80,6 +85,7 @@ class _LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         backgroundColor: Colors.black,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -180,6 +186,85 @@ class _LandingPageState extends State<LandingPage> {
             ),
 
             IconButton(onPressed:(){
+
+
+              Dialog dialog = Dialog(
+                child: SizedBox(
+                  height: 350,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Form(
+                            key: key,
+                            child: Column(
+                              children: [
+                                TextFormField(
+                                  validator: (value){
+                                    if(value!.isEmpty){
+                                      return "Please Enter Task Title";
+                                    }else if(value.length>=50){
+                                      return "Title must have less then 50 character";
+                                    }
+                                    return null;
+                                  },
+                                  controller: title,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide(color: Colors.green,width: 10)
+                                    )
+                                  ),
+                                ),
+                                TextFormField(
+                                  validator: (value){
+                                    if(value!.isEmpty){
+                                      return "Please Enter Task Dis";
+                                    }
+                                    return null;
+                                  },
+                                  controller: dis,
+                                  decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                          borderSide: BorderSide(color: Colors.green,width: 10)
+                                      )
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              TextButton(
+                                  onPressed: (){
+
+                                  },
+                                  child: Text("Cancel")),
+
+                              TextButton(
+                                  onPressed: (){
+                                    if(key.currentState!.validate()){
+                                     setState(() {
+                                       list.add( TodoModel(id: 10, title: title.text, dis: dis.text));
+                                     });
+                                    }
+                                  },
+                                  child: Text("Add")),
+
+                            ],
+                          )
+
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+              dialog.show(context);
             }, icon:Icon(Icons.add_circle,size: 60,color: Colors.deepPurple,))
           ],
         ),
